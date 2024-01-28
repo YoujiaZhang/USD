@@ -8,7 +8,7 @@ data:
   batch_size: 1
   width: 512
   height: 512
-  camera_distance_range: [1.0, 1.5]
+  camera_distance_range: [1.5, 1.5]
   fovy_range: [40, 70]
   elevation_range: [-10, 45]
   camera_perturb: 0.
