@@ -44,9 +44,9 @@ class NeuralEnvironmentMapBackground(BaseBackground):
         )
 
     def forward(self, dirs: Float[Tensor, "B H W 3"]) -> Float[Tensor, "B H W Nc"]:
-        return torch.ones(*dirs.shape[:-1], self.cfg.n_output_dims).to(
-                dirs
-            ).to(dirs)
+        # return torch.ones(*dirs.shape[:-1], self.cfg.n_output_dims).to(
+        #         dirs
+        #     ).to(dirs)
     
         if not self.training and self.cfg.eval_color is not None:
             return torch.ones(*dirs.shape[:-1], self.cfg.n_output_dims).to(
