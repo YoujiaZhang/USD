@@ -29,13 +29,16 @@ The unconditional noise predicted by Zero-1-to-3 model tends to be biased. The r
 
 Concurrent methods, like [SyncDreamer](https://github.com/liuyuan-pal/SyncDreamer) and [Wonder3D](https://github.com/xxlong0/Wonder3D) impose limitations on the viewing angles of the input image.
 
-## image-to-3D
+## Image-to-3D
 ```
 # USD image-to-3D 
 python launch.py --config configs/usd-patch.yaml --train --gpu 0
 ```
 
-## text-to-3D
+## Text-to-3D  SDS
+
+https://github.com/YoujiaZhang/USD/assets/43102378/45e07092-c62e-4236-a0fa-79238765648c
+
 ```
 # --------- Stage 1 (NeRF, SDS guidance, lambda=0) --------- #
 python launch.py --config configs/usd-text-to-3D-patch.yaml --train --gpu 0 system.prompt_processor.prompt="a pineapple"
