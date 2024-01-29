@@ -6,7 +6,7 @@ Optimized View and Geometry Distillation from Multi-view Diffuser
   <img src="assets/teaser.jpg" width="90%" height="90%">
 </div>
 
-Our technique produces multi-view images and geometries that are comparable, sometimes superior particularly for irregular camera poses, when benchmarked against concurrent methodologies such as SyncDreamer and Wonder3D, without training on large-scale data.
+Our technique produces multi-view images and geometries that are comparable, sometimes superior particularly for irregular camera poses, when benchmarked against concurrent methodologies such as [SyncDreamer](https://github.com/liuyuan-pal/SyncDreamer) and [Wonder3D](https://github.com/xxlong0/Wonder3D), without training on large-scale data.
 
 ## Denoising with unconditional noise
 
