@@ -37,8 +37,13 @@ Concurrent methods, like [SyncDreamer](https://github.com/liuyuan-pal/SyncDreame
 # USD image-to-3D 
 python launch.py --config configs/usd-patch.yaml --train --gpu 0
 
-# SDS Loss (lambda=0)
-python launch.py --config configs/usd-text-to-3D-patch.yaml --train --gpu 0 system.prompt_processor.prompt="A model of a house in Tudor style"
+
+# --------- Stage 1 (NeRF, SDS guidance, lambda=0) --------- #
+python launch.py --config configs/usd-text-to-3D-patch.yaml --train --gpu 0 system.prompt_processor.prompt="a pineapple"
+
+# --------- Stage 2 (Geometry Refinement) --------- #
+# refine geometry with 512x512 rasterization, Stable Diffusion SDS guidance
+python launch.py --config configs/usd-text-to-3D-geometry.yaml --train --gpu 0 system.prompt_processor.prompt="a pineapple" system.geometry_convert_from=path/to/stage1/trial/dir/ckpts/last.ckpt
 ```
 
 ## Acknowledgement
