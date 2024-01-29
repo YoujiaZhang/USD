@@ -22,9 +22,6 @@ The unconditional noise predicted by Zero-1-to-3 model tends to be biased. The r
   <img src="assets/main_idea.jpg" width="80%" height="80%">
 </div>
 
-## $\lambda$ analysis 
-### We found that the smaller the $\lambda$, the richer the 3D details generated using SDS!
-
 ## Different Viewing Angle Comparisons
 <div align=center>
   <img src="assets/view_page.jpg" width="100%" height="100%">
@@ -32,19 +29,28 @@ The unconditional noise predicted by Zero-1-to-3 model tends to be biased. The r
 
 Concurrent methods, like [SyncDreamer](https://github.com/liuyuan-pal/SyncDreamer) and [Wonder3D](https://github.com/xxlong0/Wonder3D) impose limitations on the viewing angles of the input image.
 
-## Quick Start
+## image-to-3D
 ```
 # USD image-to-3D 
 python launch.py --config configs/usd-patch.yaml --train --gpu 0
+```
 
-
+## text-to-3D
+```
 # --------- Stage 1 (NeRF, SDS guidance, lambda=0) --------- #
 python launch.py --config configs/usd-text-to-3D-patch.yaml --train --gpu 0 system.prompt_processor.prompt="a pineapple"
 
 # --------- Stage 2 (Geometry Refinement) --------- #
 # refine geometry with 512x512 rasterization, Stable Diffusion SDS guidance
 python launch.py --config configs/usd-text-to-3D-geometry.yaml --train --gpu 0 system.prompt_processor.prompt="a pineapple" system.geometry_convert_from=path/to/stage1/trial/dir/ckpts/last.ckpt
+
+# --------- Stage 3 (Texturing, SDS guidance, lambda=0) --------- #
+# texturing with 512x512 rasterization, Stable Difusion SDS guidance
+python launch.py --config configs/usd-text-to-3D-texture.yaml --train --gpu 0 system.prompt_processor.prompt="a pineapple" system.geometry_convert_from=path/to/stage2/trial/dir/ckpts/last.ckpt
 ```
+## $\lambda$ analysis 
+### We found that the smaller the $\lambda$, the richer the 3D details generated using SDS!
+
 
 ## Acknowledgement
 We have intensively borrow codes from the following repositories. Many thanks to the authors for sharing their codes.
