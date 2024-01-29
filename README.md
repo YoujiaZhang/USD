@@ -19,10 +19,11 @@ The unconditional noise predicted by Zero-1-to-3 model tends to be biased. The r
 
 ## Unbiased Score Distillation
 <div align=center>
-  <img src="assets/main_idea.jpg" width="60%" height="60%">
+  <img src="assets/main_idea.jpg" width="80%" height="80%">
 </div>
 
-### $\lambda$ analysis
+## $\lambda$ analysis 
+### We found that the smaller the $\lambda$, the richer the 3D details generated using SDS!
 
 ## Different Viewing Angle Comparisons
 <div align=center>
