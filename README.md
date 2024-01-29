@@ -22,6 +22,15 @@ The unconditional noise predicted by Zero-1-to-3 model tends to be biased. The r
   <img src="assets/main_idea.jpg" width="60%" height="60%">
 </div>
 
+### $\lambda$ analysis
+
+## Different Viewing Angle Comparisons
+<div align=center>
+  <img src="assets/view_page.jpg" width="100%" height="100%">
+</div>
+
+Concurrent methods, like [SyncDreamer](https://github.com/liuyuan-pal/SyncDreamer) and [Wonder3D](https://github.com/xxlong0/Wonder3D) impose limitations on the viewing angles of the input image.
+
 ## Quick Start
 ```
 # USD image-to-3D 
