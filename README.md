@@ -2,6 +2,7 @@
 Optimized View and Geometry Distillation from Multi-view Diffuser
 ## [Paper](https://arxiv.org/pdf/2312.06198.pdf) | [Project page](https://youjiazhang.github.io/USD/)
 
+
 <div align=center>
   <img src="assets/teaser.jpg" width="90%" height="90%">
 </div>
