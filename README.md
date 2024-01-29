@@ -35,7 +35,7 @@ Concurrent methods, like [SyncDreamer](https://github.com/liuyuan-pal/SyncDreame
 python launch.py --config configs/usd-patch.yaml --train --gpu 0
 ```
 
-## Text-to-3D  SDS
+## Text-to-3D
 
 https://github.com/YoujiaZhang/USD/assets/43102378/45e07092-c62e-4236-a0fa-79238765648c
 
