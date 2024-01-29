@@ -29,6 +29,15 @@ python launch.py --config configs/usd-patch.yaml --train --gpu 0
 # SDS Loss (lambda=0)
 python launch.py --config configs/usd-text-to-3D-patch.yaml --train --gpu 0 system.prompt_processor.prompt="A model of a house in Tudor style"
 ```
+
+## Acknowledgement
+We have intensively borrow codes from the following repositories. Many thanks to the authors for sharing their codes.
+- [threestudio](https://github.com/threestudio-project/threestudio)
+- [zero123](https://github.com/cvlab-columbia/zero123)
+- [SyncDreamer](https://github.com/liuyuan-pal/SyncDreamer)
+- [Wonder3D](https://github.com/xxlong0/Wonder3D/tree/main)
+- [instant-nsr-pl](https://github.com/bennyguo/instant-nsr-pl)
+
 ## Citation
 ```
 @article{zhang2023optimized,
