@@ -295,21 +295,11 @@ class USDGuidance(BaseModule):
         loss_usd = 0.5 * F.mse_loss(latents, target, reduction="sum") / batch_size
 
         loss_dict = {
-            "loss_vsd": loss_usd,
+            "loss_usd": loss_usd,
             "grad_norm": grad.norm(),
             "min_step": self.min_step,
             "max_step": self.max_step,
         }
-
-        if self.cfg.use_img_loss:
-            grad_img = torch.nan_to_num(grad_img)
-            if self.grad_clip_val is not None:
-                grad_img = grad_img.clamp(-self.grad_clip_val, self.grad_clip_val)
-            target_img = (rgb_BCHW_512 - grad_img).detach()
-            loss_vsd_img = (
-                0.5 * F.mse_loss(rgb_BCHW_512, target_img, reduction="sum") / batch_size
-            )
-            loss_dict["loss_vsd_img"] = loss_vsd_img
 
         return loss_dict
 

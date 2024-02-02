@@ -140,7 +140,7 @@ class BaseImplicitGeometry(BaseGeometry):
         )
 
         threshold: float
-        
+
         if isinstance(self.cfg.isosurface_threshold, float):
             threshold = self.cfg.isosurface_threshold
         elif self.cfg.isosurface_threshold == "auto":
@@ -153,13 +153,7 @@ class BaseImplicitGeometry(BaseGeometry):
             raise TypeError(
                 f"Unknown isosurface_threshold {self.cfg.isosurface_threshold}"
             )
-        
-        # eps = 1.0e-5
-        # threshold = field[field > eps].mean().item()
-        # threshold = 25. 原始结果
-        threshold = 2.
-        print(threshold)
-        
+
         level = self.forward_level(field, threshold)
         mesh: Mesh = self.isosurface_helper(level, deformation=deformation)
         mesh.v_pos = scale_tensor(
@@ -167,10 +161,10 @@ class BaseImplicitGeometry(BaseGeometry):
         )  # scale to bbox as the grid vertices are in [0, 1]
         mesh.add_extra("bbox", bbox)
 
-        # if self.cfg.isosurface_remove_outliers:
-        #     # remove outliers components with small number of faces
-        #     # only enabled when the mesh is not differentiable
-        #     mesh = mesh.remove_outlier(self.cfg.isosurface_outlier_n_faces_threshold)
+        if self.cfg.isosurface_remove_outliers:
+            # remove outliers components with small number of faces
+            # only enabled when the mesh is not differentiable
+            mesh = mesh.remove_outlier(self.cfg.isosurface_outlier_n_faces_threshold)
 
         return mesh
 

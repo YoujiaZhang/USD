@@ -21,6 +21,7 @@ from threestudio.utils.misc import broadcast
 from threestudio.utils.ops import scale_tensor
 from threestudio.utils.typing import *
 
+
 @threestudio.register("tetrahedra-sdf-grid")
 class TetrahedraSDFGrid(BaseExplicitGeometry):
     @dataclass
@@ -122,18 +123,6 @@ class TetrahedraSDFGrid(BaseExplicitGeometry):
             )
 
         self.mesh: Optional[Mesh] = None
-        
-        # self.v_pos = torch.load('zero123-pg/v_pos2.pt').cuda()
-        # self.t_pos_idx = torch.load('zero123-pg/t_pos_idx2.pt').cuda()
-        
-        # self.encoding = torch.load('zero123-pg/encoding.pth')
-        # self.feature_network = torch.load('zero123-pg/feature_network.pth')
-                                          
-        # v_rgb = torch.load('zero123-pg/v_rgb2.pt').cuda()
-        # self.register_parameter(
-        #     "v_rgb",
-        #     nn.Parameter(v_rgb)
-        # )
 
     def initialize_shape(self) -> None:
         if self.cfg.shape_init is None and not self.cfg.force_shape_init:
@@ -246,30 +235,17 @@ class TetrahedraSDFGrid(BaseExplicitGeometry):
             broadcast(param, src=0)
 
     def isosurface(self) -> Mesh:
-        # mesh = self.isosurface_helper(self.sdf, self.deformation)
-        # mesh.v_pos = self.v_pos
-        # mesh.t_pos_idx = self.t_pos_idx
-        # mesh.set_vertex_color(self.v_rgb)
-        # self.mesh = mesh
-        
         # return cached mesh if fix_geometry is True to save computation
-        
         if self.cfg.fix_geometry and self.mesh is not None:
             return self.mesh
-        
         mesh = self.isosurface_helper(self.sdf, self.deformation)
         mesh.v_pos = scale_tensor(
             mesh.v_pos, self.isosurface_helper.points_range, self.isosurface_bbox
         )
-        
         if self.cfg.isosurface_remove_outliers:
             mesh = mesh.remove_outlier(self.cfg.isosurface_outlier_n_faces_threshold)
-            
         self.mesh = mesh
-        
         return mesh
-    
-        
 
     def forward(
         self, points: Float[Tensor, "*N Di"], output_normal: bool = False
@@ -286,12 +262,6 @@ class TetrahedraSDFGrid(BaseExplicitGeometry):
             *points.shape[:-1], self.cfg.n_feature_dims
         )
         return {"features": features}
-    
-        # points_unscaled = points  # points in the original scale
-        # enc = self.encoding(points.view(-1, self.cfg.n_input_dims))
-        # rgb = self.feature_network(enc).view(*points.shape[:-1], 3)
-        # rgb = torch.sigmoid(rgb)
-        # return rgb
 
     @staticmethod
     @torch.no_grad()

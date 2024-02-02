@@ -418,7 +418,7 @@ class USDGuidance(BaseModule):
         self.STEP += 1
         
         return {
-            "loss_vsd": loss,
+            "loss_usd": loss,
             "min_step": self.min_step,
             "max_step": self.max_step,
         }

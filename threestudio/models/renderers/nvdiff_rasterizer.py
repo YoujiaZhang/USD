@@ -41,19 +41,18 @@ class NVDiffRasterizer(Rasterizer):
         render_rgb: bool = True,
         **kwargs
     ) -> Dict[str, Any]:
-        
         batch_size = mvp_mtx.shape[0]
         mesh = self.geometry.isosurface()
-        
+
         v_pos_clip: Float[Tensor, "B Nv 4"] = self.ctx.vertex_transform(
             mesh.v_pos, mvp_mtx
         )
         rast, _ = self.ctx.rasterize(v_pos_clip, mesh.t_pos_idx, (height, width))
         mask = rast[..., 3:] > 0
         mask_aa = self.ctx.antialias(mask.float(), rast, v_pos_clip, mesh.t_pos_idx)
-
-        out = {"opacity": mask_aa, "mesh": mesh}
         
+        out = {"opacity": mask_aa, "mesh": mesh}
+
         gb_normal, _ = self.ctx.interpolate_one(mesh.v_nrm, rast, mesh.t_pos_idx)
         gb_normal = F.normalize(gb_normal, dim=-1)
         gb_normal_aa = torch.lerp(
@@ -62,9 +61,6 @@ class NVDiffRasterizer(Rasterizer):
         gb_normal_aa = self.ctx.antialias(
             gb_normal_aa, rast, v_pos_clip, mesh.t_pos_idx
         )
-        
-        # gb_normal_bg = torch.ones(gb_normal_aa.shape).cuda()
-        # gb_normal_aa = torch.lerp(gb_normal_bg, gb_normal_aa, mask.float())
         out.update({"comp_normal": gb_normal_aa})  # in [0, 1]
 
         # TODO: make it clear whether to compute the normal, now we compute it in all cases
@@ -111,30 +107,5 @@ class NVDiffRasterizer(Rasterizer):
             gb_rgb_aa = self.ctx.antialias(gb_rgb, rast, v_pos_clip, mesh.t_pos_idx)
 
             out.update({"comp_rgb": gb_rgb_aa, "comp_rgb_bg": gb_rgb_bg})
-            
-#             selector = mask[..., 0]
-#             gb_pos, _ = self.ctx.interpolate_one(mesh.v_pos, rast, mesh.t_pos_idx)
-#             gb_viewdirs = F.normalize(
-#                 gb_pos - camera_positions[:, None, None, :], dim=-1
-#             )
-#             # positions = gb_pos[selector]
-#             # gb_rgb = self.geometry(positions, output_normal=False)
-#             # gb_rgb_fg = torch.zeros(batch_size, height, width, 3).to(gb_rgb)
-#             # gb_rgb_fg[selector] = gb_rgb
-            
-#             # v_rgb = self.geometry(mesh.v_pos, output_normal=False)
-#             v_rgb = torch.clip(mesh.v_rgb, 0, 1.0)
-#             # v_rgb = torch.sigmoid(mesh.v_rgb)
-#             gb_rgb, _ = self.ctx.interpolate_one(v_rgb, rast, mesh.t_pos_idx)
-            
-#             gb_rgb_bg = torch.ones(gb_rgb.shape).cuda()
-#             # gb_rgb_bg = self.background(dirs=gb_viewdirs)
-#             # gb_rgb_aa = torch.lerp(gb_rgb_bg, gb_rgb_fg, mask.float())
-#             gb_rgb_aa = torch.lerp(gb_rgb_bg, gb_rgb, mask.float())
-#             gb_rgb_aa = torch.clip(gb_rgb_aa,0,1.0)
-
-#             out.update({"comp_rgb": gb_rgb_aa, "comp_rgb_bg": gb_rgb_bg})
-
-            
 
         return out
