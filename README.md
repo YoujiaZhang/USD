@@ -27,19 +27,22 @@ Our proposed rectification method essentially combines the **[unconditional nois
 
 Concurrent methods, like [SyncDreamer](https://github.com/liuyuan-pal/SyncDreamer) and [Wonder3D](https://github.com/xxlong0/Wonder3D) impose limitations on the viewing angles of the input image.
 
-## Image-to-3D
+## Unbiased Score Distillation
+<div align=center>
+  <img src="assets/usd.jpg" width="70%" height="70%">
+</div>
+
+Where setting **λ = 1**, we get Formula SDS. We observed that setting **λ = 0** can significantly improve the details of the 3D results generated using SDS.
+
+### Image-to-3D
 ```
 # USD image-to-3D 
 python launch.py --config configs/usd-patch.yaml --train --gpu 0
 ```
 
-## Text-to-3D
+### Text-to-3D
 
 https://github.com/YoujiaZhang/USD/assets/43102378/45e07092-c62e-4236-a0fa-79238765648c
-
-<div align=center>
-  <img src="assets/USD.png" width="100%" height="100%">
-</div>
 
 ```
 # --------- Stage 1 (NeRF, SDS guidance, lambda=0) --------- #
